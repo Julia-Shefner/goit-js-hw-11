@@ -16,11 +16,14 @@ form.addEventListener('submit', handlerSubmit);
 function handlerSubmit(event) {
   event.preventDefault();
   const query = event.target.elements['search-text'].value.trim();
+  if (!query.length) {
+    return;
+  }
   clearGallery();
   showLoader();
   getImagesByQuery(query)
     .then(res => {
-      if (!res.data.hits.length) {
+      if (!res.length) {
         iziToast.error({
           position: 'topRight',
           progressBar: false,
@@ -29,7 +32,7 @@ function handlerSubmit(event) {
             'Sorry, there are no images matching your search query. Please try again!',
         });
       }
-      createGallery(res.data.hits);
+      createGallery(res);
     })
     .catch(error => {
       iziToast.error({
