@@ -17,6 +17,12 @@ function handlerSubmit(event) {
   event.preventDefault();
   const query = event.target.elements['search-text'].value.trim();
   if (!query.length) {
+    iziToast.error({
+      position: 'topRight',
+      progressBar: false,
+      timeout: 3000,
+      message: 'Sorry, you need to put key for search!',
+    });
     return;
   }
   clearGallery();
